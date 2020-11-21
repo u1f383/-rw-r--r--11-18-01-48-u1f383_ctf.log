@@ -54,6 +54,37 @@ metasploit 裝起來www, 不過不太懂 `ssh -L -N` 的用途, 看了手冊, `-
 $todo = "待補";
 ```
 
+## 5 (還某題 ?)
+### 分析 + 題解
+為一個提供加法服務的 server (nginx <---> flask), 且給 nginx_config (如下), 可以存取 `/template/index` 的樣子, 但是存取 `app.py` 時被擋了下來
+```
+server {
+    listen 80;
+    server_name _;
+
+    location =/robots.txt {
+        alias /home/nccst/CSC/flask_web/app/files/robots.txt;
+    }
+
+    location /admin {
+        return 403;
+    }
+
+    location /files {
+        alias /home/nccst/CSC/flask_web/app/files/;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+    }
+}
+```
+不過這個 config 是有問題的, 如果我們存取 `/files../app.py`, 根據 `nginx_config`, 他會幫我們轉成 `app/files/../app.py`, 我們就能拿到 `app.py` 了.
+
+(以下記憶瑣碎, 可能有些出入)
+
+取得 `app.py` 後, 似乎還要取得某個其他位置的 source code, 並從 internal error 500 中取得 AUTH_KEY, 最後透過 `curl` (似乎是 cmdi) 來得到 Flag.
+
 ### 題解
 主要應該是 **DTD 與 XXE 的關係 不懂**, 其他如 metasploit 沒載+不會用, 一開始沒有用 dirsearch 來取得伺服器的目錄架構等等
 
