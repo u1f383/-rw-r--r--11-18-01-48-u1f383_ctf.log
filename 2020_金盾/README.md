@@ -18,10 +18,17 @@ tomcat 開 8080 跟 8009, 並透過 dirsearch 找到 `password.txt`, 後來就�
 
 點進去是一個 apache 預設頁面, 根據題目提示發現 source code 有 ssh user/pass, 索性拿來登入, 發現馬上就被 close 掉. 根據提示, 必須使用 `ssh -L -N user@host` 來進行連線, 據說是做 proxy forward.
 
+掃完 port 發現 database 使用 postgreSQL, 並且版本過舊, 所以有 CVE 可以打, 不過 postgreSQL 預設只開放 local 才能連, 因此得想辦法 touch 到 server 的 local 環境.
+
+使用為 `ssh -L -N 8080:localhost:5432 admin@server`, 我為 client 的 8080 port 會接到 server 的 localhost:5432, 配合 `-N` 建立連線後不執行 command, 所以連線也就不會中斷, 因此可以在 local 打 CVE exploit. 因此可以繞過
+
+1. ssh 連線馬上關閉 ==> `-N`
+2. touch 不到 postgre ==> `-L 8080:localhost:5432`
+
 做完上個步驟後, 透過提供的 CVE 與現成的 metasploit payload 來做攻擊, 並且取得 shell. 拿到 shell 後, 跑某個 `/bin/KXXXX` 指令就可以拿到 Flag 了
 
 ### 檢討
-metasploit 裝起來www, 不過不太懂 `ssh -L -N` 的用途, 看了手冊, `-L` 與 `-N` 的介紹:
+metasploit 裝起來www, 當初不太懂 `ssh -L -N` 的用途, 也不懂整個流程該做什麼, 後來看了手冊 `-L` 與 `-N` 的介紹與詢問他人, 才比較了解一些.
 ```
 -L [bind_address:]port:host:hostport
 -L [bind_address:]port:remote_socket
@@ -41,7 +48,6 @@ metasploit 裝起來www, 不過不太懂 `ssh -L -N` 的用途, 看了手冊, `-
 
 -N  Do not execute a remote command.  This is useful for just forwarding ports.
 ```
-最主要還是要把 connection 轉到其他地方, 不過用途就不太清楚了
 
 ## 3
 ### 分析
