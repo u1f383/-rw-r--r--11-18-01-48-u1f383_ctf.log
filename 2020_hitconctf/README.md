@@ -25,4 +25,3 @@
 看到 `';sh f;'`，對應文章內容，很明顯就是在打這個 CVE，而藏 flag 的地方一定會再封包內部，所以會猜是不是要執行的 command 中會有 `echo flag` 或是 touch flag 等等 command，所以直接一包一包解密，最後會得到 `echo hitcon{Why_can_one_place_be_injected_twice}`，得到 flag `hitcon{Why_can_one_place_be_injected_twice}`。
 
 REF: https://www.chainnews.com/zh-hant/articles/699951583501.htm
-
