@@ -1,0 +1,8 @@
+messy_printer:
+    build: .
+    ports:
+        - "4001:4001"
+    expose:
+        - "4001"
+    volumes:
+        - './src/home:/home/messy_printer'
