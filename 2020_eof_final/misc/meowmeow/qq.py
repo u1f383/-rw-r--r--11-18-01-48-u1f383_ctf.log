@@ -1,3 +1,10 @@
+# uncompyle6 version 3.7.4
+# Python bytecode 3.8 (3413)
+# Decompiled from: Python 3.8.5 (default, Jul 28 2020, 12:59:40) 
+# [GCC 9.3.0]
+# Embedded file name: source.py
+# Compiled at: 2021-02-03 03:35:27
+# Size of source mod 2**32: 1 bytes
 import random, time, os, struct
 hp = 1000
 attk = 10
