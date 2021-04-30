@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# set and unset certain flags or settings within the shell environment
+set -eu
+# -e: It is used to exit immediately if a command exits with a non-zero status.
+# -u: It is used to treat unset variables as an error when substituting.
+
+# -q: quiet
+# -e: match multiple re
+if grep -qe "external" -e "unsafe" input/exploit.ml; then
+	echo "unsafe!"
+	exit 1
+fi
+
+echo "open! Sos" > user/exploit.ml
+cat input/exploit.ml >> user/exploit.ml
+dune exec user/exploit.exe
