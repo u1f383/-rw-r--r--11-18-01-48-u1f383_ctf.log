@@ -1,0 +1,4 @@
+core
+.gdb_history
+ld*.so
+libc*.so
